@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Insert this line above script imports  -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+        <!-- Insert this line after script imports -->
+
+    <script>
+        $(function() {
+            const { ipcRenderer } = require('electron')
+            $("#creds").submit(function(e) {
+                e.preventDefault();
+                const userService = {
+                    username: $('#exampleInputEmail1').val(),
+                    password: $('#exampleInputPassword1').val(),
+                    contact: $('#contactName').val(),
+                    refresh: $('#refreshWindowDropdown').val()
+                }
+                ipcRenderer.sendSync('synchronous-message', userService);
+            });
+            
+            $("#test-sms").click(function(e) {
+                ipcRenderer.sendSync('test-sms', $('#contactName').val());
+            });
+        });
+    </script>
+    <script>if (window.module) module = window.module;</script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="app.css" crossorigin="anonymous">
+
+    <title>Delivery Window Checker</title>
+</head>
+
+<body>
+    <h1>Delivery Window Checker</h1>
+    <br />
+    <form id="creds">
+        <div class="form-group">
+            <label for="groceryInputDropdown">Grocery Service</label>
+            <select id="groceryInputDropdown" class="form-control">
+                <option>Amazon Fresh</option>
+            </select>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Service Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">We don't store or send your Email address to any servers.
+                We use these to authenticate your account with the selected Service.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Service Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+            <small id="emailHelp" class="form-text text-muted">We don't store or send your Password to any servers. We
+                use these to authenticate your account with the selected Service.</small>
+        </div>
+        <div class="form-group">
+            <label for="contactName">Contact Name for SMS Notification</label>
+            <input type="text" class="form-control" id="contactName" aria-describedby="contactHelp">
+            <small id="contactHelp" class="form-text text-muted">A contact name from your contacts to send SMS
+                notification when Delivery window is available. You can use your own contact name as well.</small>
+        </div>
+        <div class="form-group">
+            <label for="refreshWindowDropdown">Recheck after every</label>
+            <select id="refreshWindowDropdown" class="form-control">
+                <option value="60">1 minute</option>
+                <option value="300">5 minute</option>
+                <option selected value="600">10 minute</option>
+                <option value="900">15 minute</option>
+                <option value="1800">30 minute</option>
+                <option value="3600">1 hour</option>
+            </select>
+            <small id="emailHelp" class="form-text text-muted">This option will be used to refresh to see if new
+                delivery windows are available.</small>
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-primary" id="submit">Start Checking</button> 
+        <button type="button" class="btn btn-secondary ml-1" id="test-sms">Test SMS</button>
+    </form>
+</body>
+
+</html>

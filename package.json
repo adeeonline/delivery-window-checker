@@ -1,0 +1,19 @@
+{
+  "name": "delivery-slot-checker",
+  "version": "1.0.0",
+  "description": "Check for available Delivery time slots in popular Grocery delivery services",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Assad Ullah",
+  "license": "ISC",
+  "dependencies": {
+    "atomic-sleep": "^1.0.0",
+    "puppeteer": "^2.1.1",
+    "sleep": "^6.1.0"
+  },
+  "devDependencies": {
+    "electron": "^8.2.1"
+  }
+}
