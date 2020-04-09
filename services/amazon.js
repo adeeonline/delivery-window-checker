@@ -1,13 +1,13 @@
 const puppeteer = require('puppeteer');
 const { exec, execSync } = require("child_process");
-
-const browserLaunchParams = { headless: true };
 const pageParams = { waitUntil: ["networkidle0", "domcontentloaded"] };
 const viewPortParams = { width: 1800, height: 700 };
 const allConfigs = require('../config.json');
 const amazon = allConfigs.amazon;
 
-module.exports.run = async function (username, password, contact, refresh) {
+module.exports.run = async function (username, password, contact, refresh, browserHidden) {
+    const hidden = browserHidden === "hidden" ? true : false;
+    const browserLaunchParams = { headless: hidden };
     const browser = await puppeteer.launch(browserLaunchParams);
     const page = await browser.newPage();
     await page.setViewport(viewPortParams);

@@ -27,7 +27,8 @@
                     username: $('#exampleInputEmail1').val(),
                     password: $('#exampleInputPassword1').val(),
                     contact: $('#contactName').val(),
-                    refresh: $('#refreshWindowDropdown').val()
+                    refresh: $('#refreshWindowDropdown').val(),
+                    headless: $('#headlessDropdown').val()
                 }
                 ipcRenderer.sendSync('synchronous-message', userService);
             });
@@ -87,6 +88,14 @@
             </select>
             <small id="emailHelp" class="form-text text-muted">This option will be used to refresh to see if new
                 delivery windows are available.</small>
+        </div>
+        <div class="form-group">
+            <label for="headlessDropdown">Web Browser</label>
+            <select id="headlessDropdown" class="form-control">
+                <option selected value="hidden">Hide Browser</option>
+                <option value="show">Show Browser</option>
+            </select>
+            <small id="headlessHelp" class="form-text text-muted">If you want to see Browser</small>
         </div>
 
         <br />
